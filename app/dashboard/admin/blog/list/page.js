@@ -1,5 +1,4 @@
 import Link from "next/link";
-import BlogList from "@/components/blogs/BlogList";
 
 async function getBlogs(searchParams) {
   //console.log("searchParams1 => ", searchParams);
@@ -26,7 +25,7 @@ async function getBlogs(searchParams) {
   return data; //{blogs, currentPage, totalPages}
 }
 
-export default async function Home({ searchParams }) {
+export default async function BlogList({ searchParams }) {
   //console.log("searchParams3 => ", searchParams);
   const data = await getBlogs(searchParams);
   //console.log("data in home page =>", data);
@@ -34,12 +33,20 @@ export default async function Home({ searchParams }) {
   const hasPreviousPage = currentPage > 1;
   const hasNextPage = currentPage < totalPages;
   return (
-    <main>
+    <main className="container">
       <p className="lead text-primary text-center">Latest Blogs</p>
 
-      <BlogList blogs={blogs} />
-
-      {/* <pre>{JSON.stringify(data, null, 4)}</pre> */}
+      {blogs.map((blog) => (
+        <div className="d-flex justify-content-between" key={blog._id}>
+          <p>{blog.title}</p>
+          <Link
+            className="text-danger"
+            href={`/dashboard/admin/blog/update/${blog.slug}`}
+          >
+            Update
+          </Link>
+        </div>
+      ))}
 
       <div className="d-flex justify-content-center">
         <nav aria-label="Page navigation">
@@ -49,20 +56,7 @@ export default async function Home({ searchParams }) {
                 Prev
               </Link>
             )}
-            {Array.from({ length: totalPages }, (_, index) => {
-              const page = index + 1;
-              return (
-                <li
-                  key={page}
-                  className={`page-item ${page === currentPage ? "active" : ""}
-                    `}
-                >
-                  <Link className="page-link" href={`?page=${page}`}>
-                    {page}
-                  </Link>
-                </li>
-              );
-            })}
+
             {hasNextPage && (
               <Link className="page-link" href={`?page=${currentPage + 1}`}>
                 Next
