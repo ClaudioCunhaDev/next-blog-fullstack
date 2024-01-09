@@ -26,6 +26,11 @@ async function getBlogs(searchParams) {
   return data; //{blogs, currentPage, totalPages}
 }
 
+export const metadata = {
+  title: "Latest Recipes",
+  description: "Latest recipes on web development",
+};
+
 export default async function Home({ searchParams }) {
   //console.log("searchParams3 => ", searchParams);
   const data = await getBlogs(searchParams);

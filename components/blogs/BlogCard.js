@@ -2,6 +2,7 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import BlogLike from "./BlogLike";
+import Image from "next/image";
 
 dayjs.extend(relativeTime);
 
@@ -9,11 +10,13 @@ export default function BlogCard({ blog }) {
   return (
     <div className="card mb-4">
       <div style={{ height: "200px", overflow: "hidden" }}>
-        <img
-          src={blog.image || "/images/default.jpg"}
+        <Image
+          src={blog?.image || "/images/new-wave.jpeg"}
           className="card-img-top"
-          alt={blog.title}
+          width={500}
+          height={300}
           style={{ objectFit: "cover", height: "100%", width: "100%" }}
+          alt={blog.title}
         />
       </div>
       <div className="card-body">

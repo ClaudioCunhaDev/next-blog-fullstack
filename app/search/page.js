@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useSearch } from "@/context/search";
 import BlogList from "@/components/blogs/BlogList";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export default function SearchParams() {
   const { setSearchQuery, searchResults, setSearchResults } = useSearch();

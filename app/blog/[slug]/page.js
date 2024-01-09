@@ -1,6 +1,7 @@
 import BlogLike from "@/components/blogs/BlogLike";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Image from "next/image";
 import Link from "next/link";
 
 dayjs.extend(relativeTime);
@@ -15,6 +16,11 @@ async function getBlog(slug) {
   return data;
 }
 
+export const metadata = {
+  title: "Latest Recipes",
+  description: "Latest recipes on web development",
+};
+
 export default async function BlogViewPage({ params }) {
   //console.log(params);
   const blog = await getBlog(params.slug);
@@ -26,7 +32,9 @@ export default async function BlogViewPage({ params }) {
       <div className="container mb-5">
         <div className="card">
           <div style={{ height: "300px", overflow: "hidden" }}>
-            <img
+            <Image
+              width={500}
+              height={300}
               src={blog.image || "/images/default.jpg"}
               className="card-img-top"
               alt={blog.title}
@@ -40,7 +48,7 @@ export default async function BlogViewPage({ params }) {
             <div className="card-text">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: blog.content,
+                  __html: blog?.content,
                 }}
               ></div>
             </div>
